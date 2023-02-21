@@ -24,92 +24,138 @@
 #        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-# Khai bao dictionary chua cac thong tin
+# Declare the dictionaries will be used
 students = {}
 courses = {}
 marks = {}
 
-# Cac ham nhap thong tin
-def input_students():
-  # Nhap so luong sinh vien can nhap
-  num_students = int(input("Enter number of students: "))
+# Clear the screen
+import os
+os.system('clear')
 
-  # Nhap thong tin sinh vien
-  for _ in range(num_students):
-    student_id = input("Enter student ID: ")
-    student_name = input("Enter student name: ")
-    student_DoB = input("Enter student date of birth: ")
-    students[student_id] = {"id": student_id, "name": student_name, "dob": student_DoB}
+# Input the student(s) list
+def input_students():
+    print("----- WELCOME -----")
+  # Declare the number of students to be input
+    stunum = int(input("Number of students you want to import: "))
+
+  # Input the student(s) informations
+    i = 0
+    for _ in range(stunum):
+        i = i+1
+        print("Let's input information for Student No.",i)
+        print("---------------------------")
+        stu_id = str(input("Student ID: "))
+        stu_name = str(input("Student name: "))
+        stu_dob = str(input("Student DOB: "))
+        # Add the student information to the dictionary
+        students[stu_id] = {"id": stu_id, "name": stu_name, "dob": stu_dob}
+        print("Student No.",i," information has been imported successfully!")
+        print("--------------------------------------------")
 
 def input_courses():
-  # Nhap so luong mon hoc can nhap
-  num_courses = int(input("Enter number of courses: "))
+  # Declare the number of courses to be input
+  cou_num = int(input("Number of courses you want to import: "))
 
-  # Nhap thong tin mon hoc
-  for _ in range(num_courses):
-    course_id = input("Enter course ID: ")
-    course_name = input("Enter course name: ")
-    courses[course_id] = {"id": course_id, "name": course_name}
+  # Input the course information
+  i = 0
+  for i in range(cou_num):
+    i = i+1
+    print("Let's input information for Course No.",i)
+    cou_id = str(input("Course ID: "))
+    cou_name = str(input("Course name: "))
+    # Add the course information to the dictionary
+    courses[cou_id] = {"id": cou_id, "name": cou_name}
+    print("Course No.",i," information has been imported successfully!")
+    print("--------------------------------------------")
 
-# Ham nhap diem cho tung sinh vien theo tung course
+# List all the courses and students' information - ID, name, (DOB)
+
+def list_all():
+    print("Input completed!")
+    print("List of courses: ")
+    # Scan the dictionary and print the information
+    for cou_id in courses:
+        print(f"ID: {courses[cou_id]['id']}, Course Name: {courses[cou_id]['name']}")
+    print("----------------------------")
+    print("List of students: ")
+    # Scan the dictionary and print the information
+    for stu_id in students:
+        print(f"ID: {students[stu_id]['id']}, Name: {students[stu_id]['name']}, DOB: {students[stu_id]['dob']}")
+    print("--------------------------------------------")
+
+# Input the marks for each student in each course
 def input_marks():
-    course_id = input("Enter the course ID: ")
-    if course_id not in courses:
-        print("Invalid course ID")
+    cou_id = str(input("Enter the course ID you want to input mark: "))
+    if cou_id not in courses:
+        print("Cannot find the course ID. Please try again!")
         return
-    for student_id in students:
-        mark = float(input(f"Enter the mark for {students[student_id]['name']}: "))
-        if student_id not in marks.keys():
-            marks[student_id] = {}
-        marks[student_id][course_id] = mark
+    for stu_id in students:
+        mark = float(input(f"Mark of {students[stu_id]['name']}: "))
+        if stu_id not in marks:
+            marks[stu_id] = {}
+        marks[stu_id][cou_id] = mark
 
-# Ham hien thi danh sach cac course
-def list_courses():
-    for course_id in courses:
-        print(f"{courses[course_id]['id']}: {courses[course_id]['name']}")
-
-# Ham hien thi danh sach cac sinh vien
-def list_students():
-    for student_id in students:
-        print(f"{students[student_id]['id']}: {students[student_id]['name']}, DOB: {students[student_id]['dob']}")
-
-# Ham hien thi diem cua tung sinh vien theo tung course
+# Output the marks for each student in each course
 def show_marks():
-    course_id = input("Enter the course ID: ")
-    if course_id not in courses:
-        print("Invalid course ID")
+    cou_id = input("Enter the course ID you want to output: ")
+    if cou_id not in courses:
+        print("Cannot find the course ID. Please try again!")
         return
-    for student_id in students:
-        if student_id in marks and course_id in marks[student_id]:
-            print(f"{students[student_id]['name']}: {marks[student_id][course_id]}")
+    for stu_id in students:
+        if stu_id in marks and cou_id in marks[stu_id]:
+            print(f"{students[stu_id]['name']}: {marks[stu_id][cou_id]}")
         else:
-            print(f"{students[student_id]['name']}: N/A")
+            print(f"{students[stu_id]['name']}: Not Found / Not Available")
 
-# Chay chuong trinh, chay hai ham nhap thong tin truoc khi chay menu
+# Create a function to ask the user if they want to continue with other course 
+def show_marks_choise():
+    show_marks()
+    print("-----------------")
+    print("Do you want to continue with other course? (Y/N)")
+    choice = input("Your choice: ")
+    if choice == "Y":
+        show_marks()
+    elif choice == "N":
+        print("Thank you for using our program!")
+        exit()
+    else:
+        print("Invalid choice. Please try again!")
+
+
+# Run the program eventually
 input_students()
+
+# Wait for 3 seconds before clear the screen again
+print("Please wait for 3 seconds...")
+import time
+time.sleep(3)
+os.system('clear')
+
+# Continue the program
 input_courses()
 
-# Menu chinh
+# Wait for 3 seconds before clear the screen again
+print("Please wait for 3 seconds...")
+import time
+time.sleep(3)
+os.system('clear')
+
+# Continue the program
+list_all()
+input_marks()
 while True:
-    print("Select an option")
-    print("1. Input marks for a course")
-    print("2. List courses")
-    print("3. List students")
-    print("4. Show student marks for a given choice")
-    print("5. Quit")
-    choice = input("Enter your choice: ")
-    if choice == "1":
+    print("-----------------")
+    print("Input mark for the course completed.")
+    print("Do you want to input other course? (Y/N)")
+    choice = input("Your choice: ")
+    if choice == "Y":
         input_marks()
-    elif choice == "2":
-        list_courses()
-    elif choice == "3":
-        list_students()
-    elif choice == "4":
-        show_marks()
-    elif choice == "5":
-        break
+    elif choice == "N":
+        show_marks_choise()
     else:
-        print("Invalid choice!")
+        print("Invalid choice. Please try again!")
+        continue
 
 #                            _
 #                         _ooOoo_
