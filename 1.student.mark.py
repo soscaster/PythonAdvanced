@@ -1,4 +1,10 @@
 # -*- coding: utf-8 -*-
+
+# Sorry Mr. Tran Giang Son. The previous code I did copy some from the source code from a senior.
+# At this version, I have tried to do it by myself, removing and adding some features that are not in the source code.
+# I hope you will not be angry with me.
+# Thank you for your understanding.
+
 #                            _
 #                         _ooOoo_
 #                        o8888888o
@@ -22,7 +28,6 @@
 #              Phật phù hộ, không bao giờ BUG
 #            Nguyễn Quang Minh - ICT - BI12-271
 #        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
 
 # Declare the dictionaries will be used
 students = {}
