@@ -269,14 +269,17 @@ class Manage:
 # Run the program
 manage = Manage()
 import os
-os.system("cls")
+# This code is for Windows : os.system("cls")
+clear = lambda: os.system('clear')
+clear()
 manage.input_students()
 
 # Wait for 3 seconds
 print("Please wait for 3 seconds...")
 import time
 time.sleep(3)
-os.system("cls")
+# os.system("cls")
+clear()
 
 # Continue
 manage.input_courses()
@@ -284,7 +287,8 @@ manage.input_courses()
 # Wait for 3 seconds
 print("Please wait for 3 seconds...")
 time.sleep(3)
-os.system("cls")
+# os.system("cls")
+clear()
 
 # Continue
 manage.list_all()
