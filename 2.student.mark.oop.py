@@ -144,15 +144,15 @@ class Manage:
                 print("Student found!")
                 print("Student name: ", self.students[stu_id].name)
                 print("----------------------------")
-                mark = str(input("Please input the mark: "))
+                mark = float(input("Please input the mark: "))
                 
                 # Create a new mark object
-                mark = Mark(stu_id, cou_id, mark)
+                markre = Mark(stu_id, cou_id, mark)
                 # Add the mark object to the dictionary
-                self.marks[stu_id] = mark
+                self.marks[stu_id] = markre
 
                 # One more way to add the mark information to the dictionary
-                # marks[stu_id] = {"id": stu_id, "course": cou_id, "mark": mark}
+                # self.marks[stu_id] = {"id": stu_id, "course": cou_id, "mark": mark}
 
                 print("Mark information has been imported successfully!")
                 print("--------------------------------------------")
@@ -161,44 +161,6 @@ class Manage:
 
         else:
             print("Course not found!")
-
-        # One more way to input the mark information
-        # cou_id = str(input("Enter the course ID you want to input mark: "))
-        # if cou_id not in courses:
-        #     print("Cannot find the course ID. Please try again!")
-        #     return
-        # for stu_id in students:
-        #     mark = float(input(f"Mark of {students[stu_id]['name']}: "))
-        #     if stu_id not in marks:
-        #         marks[stu_id] = {}
-        #     marks[stu_id][cou_id] = mark
-
-
-        # One even more way to input the mark information
-        # # Input the number of marks are going to be input
-        # mark_num = int(input("Number of marks you want to import: "))
-
-        # # Set i = 0, then i = i+1 to create a loop to input the mark information
-        # i = 0
-
-        # # Input the mark information by using for loop and append the information to the dictionary
-        # for i in range(mark_num):
-        #     i = i + 1
-        #     print("Let's input information for Mark No.", i)
-        #     stu_id = str(input("Student ID: "))
-        #     cou_id = str(input("Course ID: "))
-        #     mark = str(input("Mark: "))
-
-        #     # Create a new mark object
-        #     mark = Mark(stu_id, cou_id, mark)
-        #     # Add the mark object to the dictionary
-        #     self.marks[stu_id] = mark
-
-        #     # One more way to add the mark information to the dictionary
-        #     # marks[stu_id] = {"id": stu_id, "course": cou_id, "mark": mark}
-
-        #     print("Mark No.", i, " information has been imported successfully!")
-        #     print("--------------------------------------------")
 
     # Output the mark for each student in each course (choose the course first, then choose the student)
     def show_marks(self):
@@ -210,28 +172,13 @@ class Manage:
             stu_id = str(input("Please input the student ID you want to show mark: "))
             if stu_id in self.students:
                 print("Student found!")
-                print("Student name: ", self.students[stu_id].name)
-                print("----------------------------")
-                print("Mark: ", self.marks[stu_id].mark)
+                print(f"{self.students[stu_id]['name']}: {self.marks[stu_id][cou_id]}")
                 print("--------------------------------------------")
                 self.continue_or_not()
             else:
                 print("Student not found!")
-
         else:
             print("Course not found!")
-
-    # One more way to output the mark information
-    # cou_id = str(input("Enter the course ID you want to show mark: "))
-    # if cou_id not in courses:
-    #    print("Cannot find the course ID. Please try again!")
-    #   return
-    # for stu_id in students:
-    #    if stu_id in self.marks:
-    #       print(f"Mark of {students[stu_id]['name']}: {marks[stu_id][cou_id]}")
-    # else:
-    #   print(f"Mark of {students[stu_id]['name']}: Not Found / Not Available")
-    # print("--------------------------------------------")       
 
     # Create a function to ask if the user wants to continue or not
     def continue_or_not(self):
@@ -251,20 +198,6 @@ class Manage:
             # If the user inputs other characters, then the program will ask the user to input again
             else:
                 print("Please input Y or N!")
-
-    # One more way to create a function to ask if the user wants to continue or not
-    # def continue_or_not(self):
-    # show_marks()
-    # print("-----------------")
-    # print("Do you want to continue with other course? (Y/N)")
-    # choice = input("Your choice: ")
-    # if choice == "Y":
-    #     show_marks()
-    # elif choice == "N":
-    #     print("Thank you for using our program!")
-    #     exit()
-    # else:
-    #     print("Invalid choice. Please try again!")
 
 # Run the program
 manage = Manage()
