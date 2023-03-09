@@ -32,6 +32,7 @@
 #        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 import math
+import numpy as np
 
 class Student:
     def __init__(self, id, name, dob):
@@ -214,7 +215,6 @@ class Manage:
             print("----------------------------")
 
             # Calculate the GPA using numpy
-            import numpy as np
             marks = []
 
             # Get the marks for the specified student
@@ -227,11 +227,37 @@ class Manage:
             gpa = np.mean(marks)
             print(f"GPA: {gpa}")
             print("--------------------------------------------")
-            self.continue_or_not_exit()
+            self.continue_or_not_sort()
         else:
             print("Student not found!")
 
-    # Create a function to ask if the user wants to continue or run another function
+    # Sort student list by GPA descending order
+    def sort_by_gpa(self):
+        print("Sort by GPA descending order")
+        print("----------------------------")
+
+        # Create a new dictionary to store the GPA
+        gpa = {}
+
+        # Calculate the GPA for each student
+        for stu_id in self.students:
+            marks = []
+            for key in self.marks:
+                mark = self.marks[key]
+                if mark.student == stu_id:
+                    marks.append(mark.mark)
+            gpa[stu_id] = np.mean(marks)
+
+        # Sort the GPA dictionary by GPA descending order
+        gpa = dict(sorted(gpa.items(), key=lambda item: item[1], reverse=True))
+
+        # Print the sorted GPA dictionary
+        for stu_id in gpa:
+            print(f"Student ID: {stu_id}, GPA: {gpa[stu_id]}")
+        print("--------------------------------------------")
+        exit()
+
+    # Create a function to ask if the user wants to continue or run GPA count function
     def continue_or_not(self):
         while True:
             # Ask the user if they want to continue or not
@@ -249,10 +275,8 @@ class Manage:
             else:
                 print("Please input Y or N!")
 
-
-
-    # Create a function to ask if the user wants to continue or exit the program
-    def continue_or_not_exit(self):
+    # Create a function to ask if the user wants to continue or run sort GPA function
+    def continue_or_not_sort(self):
         while True:
             # Ask the user if they want to continue or not
             continue_or_not = str(input("Do you want to continue? (Y/N): "))
@@ -263,12 +287,30 @@ class Manage:
             
             # If the user inputs N, then the program will stop
             elif continue_or_not == "N":
-                print("Thank you for using our program!")
-                exit()
+                self.sort_by_gpa()
             
             # If the user inputs other characters, then the program will ask the user to input again
             else:
                 print("Please input Y or N!")
+
+    # Create a function to ask if the user wants to continue or exit the program
+    # def continue_or_not_exit(self):
+    #     while True:
+    #         # Ask the user if they want to continue or not
+    #         continue_or_not = str(input("Do you want to continue? (Y/N): "))
+            
+    #         # If the user inputs Y, then the program will continue
+    #         if continue_or_not == "Y":
+    #             self.gpa_calculator()
+            
+    #         # If the user inputs N, then the program will stop
+    #         elif continue_or_not == "N":
+    #             print("Thank you for using our program!")
+    #             exit()
+            
+    #         # If the user inputs other characters, then the program will ask the user to input again
+    #         else:
+    #             print("Please input Y or N!")
 
 # Run the program
 manage = Manage()
@@ -309,3 +351,4 @@ while True:
     else:
         print("Invalid choice. Please try again!")
         continue
+    
