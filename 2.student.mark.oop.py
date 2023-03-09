@@ -146,10 +146,11 @@ class Manage:
                 print("----------------------------")
                 mark = float(input("Please input the mark: "))
                 
+                key = (stu_id, cou_id)
                 # Create a new mark object
                 markre = Mark(stu_id, cou_id, mark)
                 # Add the mark object to the dictionary
-                self.marks[stu_id] = markre
+                self.marks[key] = markre
 
                 # One more way to add the mark information to the dictionary
                 # self.marks[stu_id] = {"id": stu_id, "course": cou_id, "mark": mark}
@@ -163,20 +164,42 @@ class Manage:
             print("Course not found!")
 
     # Output the mark for each student in each course (choose the course first, then choose the student)
+    # def show_marks(self):
+    #     cou_id = str(input("Please input the course ID you want to show mark: "))
+    #     if cou_id in self.courses:
+    #         print("Course found!")
+    #         print("Course name: ", self.courses[cou_id].name)
+    #         print("----------------------------")
+    #         stu_id = str(input("Please input the student ID you want to show mark: "))
+    #         if stu_id in self.students:
+    #             print("Student found!")
+    #             print(f"{self.students[stu_id].name}: {self.marks[stu_id].mark}")
+    #             print("--------------------------------------------")
+    #             self.continue_or_not()
+    #         else:
+    #             print("Student not found!")
+    #     else:
+    #         print("Course not found!")
+
     def show_marks(self):
         cou_id = str(input("Please input the course ID you want to show mark: "))
         if cou_id in self.courses:
             print("Course found!")
             print("Course name: ", self.courses[cou_id].name)
             print("----------------------------")
-            stu_id = str(input("Please input the student ID you want to show mark: "))
-            if stu_id in self.students:
-                print("Student found!")
-                print(f"{self.students[stu_id]['name']}: {self.marks[stu_id][cou_id]}")
-                print("--------------------------------------------")
-                self.continue_or_not()
-            else:
-                print("Student not found!")
+            print("List of marks: ")
+
+        # Iterate over the marks dictionary and display the marks for the specified course
+            # for stu_id in self.marks:
+            #     mark = self.marks[stu_id]
+            #     if mark.course == cou_id:
+            #         print(f"Student ID: {mark.student}, Mark: {mark.mark}")
+            #         self.continue_or_not()
+
+            for key, mark in self.marks.items():
+                if mark.course == cou_id:
+                    print(f"Course: {mark.course}, Student ID: {mark.student}, Mark: {mark.mark}")
+                    self.continue_or_not()
         else:
             print("Course not found!")
 
