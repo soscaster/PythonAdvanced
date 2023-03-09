@@ -190,11 +190,16 @@ class Manage:
             print("List of marks: ")
 
         # Iterate over the marks dictionary and display the marks for the specified course
-            for stu_id in self.marks:
-                mark = self.marks[stu_id]
+            # for stu_id in self.marks:
+            #     mark = self.marks[stu_id]
+            #     if mark.course == cou_id:
+            #         print(f"Student ID: {mark.student}, Mark: {mark.mark}")
+            #         self.continue_or_not()
+
+            for key, mark in self.marks.items():
                 if mark.course == cou_id:
-                    print(f"Student ID: {mark.student}, Mark: {mark.mark}")
-            self.continue_or_not()
+                    print(f"Course: {mark.course}, Student ID: {mark.student}, Mark: {mark.mark}")
+                    self.continue_or_not()
         else:
             print("Course not found!")
 
