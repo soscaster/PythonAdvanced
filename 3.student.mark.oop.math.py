@@ -33,7 +33,9 @@
 #        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 import math
 import numpy as np
-
+import os
+# This code is for Windows : os.system("cls")
+clear = lambda: os.system('clear')
 
 class Student:
     def __init__(self, id, name, dob):
@@ -43,9 +45,10 @@ class Student:
 
 
 class Course:
-    def __init__(self, id, name):
+    def __init__(self, id, name, credit):
         self.id = id
         self.name = name
+        self.credit = credit
 
 
 class Mark:
@@ -106,9 +109,10 @@ class Manage:
             print("Let's input information for Course No.", i)
             cou_id = str(input("Course ID: "))
             cou_name = str(input("Course name: "))
+            cou_credit = int(input("Course credit(s): "))
 
             # Create a new course object
-            course = Course(cou_id, cou_name)
+            course = Course(cou_id, cou_name, cou_credit)
             # Add the course object to the dictionary
             self.courses[cou_id] = course
 
@@ -125,7 +129,7 @@ class Manage:
         
         # Scan the dictionary and print the information
         for cou_id in self.courses:
-            print(f"ID: {self.courses[cou_id].id}, Course Name: {self.courses[cou_id].name}")
+            print(f"ID: {self.courses[cou_id].id}, Course Name: {self.courses[cou_id].name}, Course Credit(s): {self.courses[cou_id].credit}")
         print("----------------------------")
         print("List of students: ")
 
@@ -143,58 +147,46 @@ class Manage:
             print("Course found!")
             print("Course name: ", self.courses[cou_id].name)
             print("----------------------------")
-            stu_id = str(input("Please input the student ID you want to input mark: "))
-            
-            # Check if the student ID is in the dictionary
-            if stu_id in self.students:
-                print("Student found!")
+            # stu_id = str(input("Please input the student ID you want to input mark: "))
+
+            # Input marks for each student in the course
+
+            for stu_id in self.students:
+                # print("Student found!")
+                print("Student ID: ", self.students[stu_id].id)
                 print("Student name: ", self.students[stu_id].name)
-                print("----------------------------")
                 mark = float(input("Please input the mark: "))
-                
-                key = (stu_id, cou_id)
+                if mark >= 0 and mark <= 20:
+                    key = (stu_id, cou_id)
+                    mark = math.floor(mark)
+                    # Create a new mark object
+                    markre = Mark(stu_id, cou_id, mark)
+                    # Add the mark object to the dictionary
+                    self.marks[stu_id] = markre
 
-                # Round the mark using math.floor
-                mark = math.floor(mark)
+                    # One more way to add the mark information to the dictionary
+                    # self.marks[stu_id] = {"id": stu_id, "course": cou_id, "mark": mark}
 
-                # Create a new mark object
-                markre = Mark(stu_id, cou_id, mark)
+                    print("Mark information has been imported successfully!")
+                    print("--------------------------------------------")
+                else:
+                    print("Invalid mark!")
+                    print("Please input the mark again!")
+                    print("--------------------------------------------")
+                    # Show the mark input menu again
+                    self.input_marks()
 
-                # Add the mark object to the dictionary
-                self.marks[key] = markre
-
-                # One more way to add the mark information to the dictionary
-                # self.marks[stu_id] = {"id": stu_id, "course": cou_id, "mark": mark}
-
-                print("Mark information has been imported successfully!")
-                print("--------------------------------------------")
             else:
                 print("Student not found!")
 
         else:
             print("Course not found!")
 
-    # Output the mark for each student in each course (choose the course first, then choose the student)
-    # def show_marks(self):
-    #     cou_id = str(input("Please input the course ID you want to show mark: "))
-    #     if cou_id in self.courses:
-    #         print("Course found!")
-    #         print("Course name: ", self.courses[cou_id].name)
-    #         print("----------------------------")
-    #         stu_id = str(input("Please input the student ID you want to show mark: "))
-    #         if stu_id in self.students:
-    #             print("Student found!")
-    #             print(f"{self.students[stu_id].name}: {self.marks[stu_id].mark}")
-    #             print("--------------------------------------------")
-    #             self.continue_or_not()
-    #         else:
-    #             print("Student not found!")
-    #     else:
-    #         print("Course not found!")
-
     def show_marks(self):
+        clear()
         cou_id = str(input("Please input the course ID you want to show mark: "))
         if cou_id in self.courses:
+            print("--------------------------------------------")
             print("Course found!")
             print("Course name: ", self.courses[cou_id].name)
             print("----------------------------")
@@ -205,6 +197,7 @@ class Manage:
                 mark = self.marks[stu_id]
                 if mark.course == cou_id:
                     print(f"Student ID: {mark.student}, Mark (rounded): {mark.mark}")
+            print("----------------------------")
             self.continue_or_not()
         else:
             print("Course not found!")
@@ -212,6 +205,7 @@ class Manage:
     # Calculate the GPA for each student (choose the student first)
     # using math and numpy modules
     def gpa_calculator(self):
+        clear()
         stu_id = str(input("Please input the student ID you want to calculate GPA: "))
         if stu_id in self.students:
             print("Student found!")
@@ -226,9 +220,19 @@ class Manage:
                 mark = self.marks[key]
                 if mark.student == stu_id:
                     marks.append(mark.mark)
-            
-            # Calculate the GPA using numpy
-            gpa = np.mean(marks)
+
+            # Get course credits for the specified student
+            credits = []
+            for key in self.marks:
+                mark = self.marks[key]
+                if mark.student == stu_id:
+                    credits.append(self.courses[mark.course].credit)
+
+            # Calculate the GPA
+            # GPA = (sum of marks*credit)/sum of credit
+            gpa = np.average(marks, weights=credits)
+
+
             print(f"GPA: {gpa}")
             print("--------------------------------------------")
             self.continue_or_not_sort()
@@ -237,6 +241,7 @@ class Manage:
 
     # Sort student list by GPA descending order
     def sort_by_gpa(self):
+        clear()
         print("Sort by GPA descending order")
         print("----------------------------")
 
@@ -246,11 +251,13 @@ class Manage:
         # Calculate the GPA for each student
         for stu_id in self.students:
             marks = []
+            credits = []
             for key in self.marks:
                 mark = self.marks[key]
                 if mark.student == stu_id:
                     marks.append(mark.mark)
-            gpa[stu_id] = np.mean(marks)
+                    credits.append(self.courses[mark.course].credit)
+            gpa[stu_id] = np.average(marks, weights=credits)
 
         # Sort the GPA dictionary by GPA descending order
         gpa = dict(sorted(gpa.items(), key=lambda item: item[1], reverse=True))
@@ -297,30 +304,7 @@ class Manage:
             else:
                 print("Please input Y or N!")
 
-    # Create a function to ask if the user wants to continue or exit the program
-    # def continue_or_not_exit(self):
-    #     while True:
-    #         # Ask the user if they want to continue or not
-    #         continue_or_not = str(input("Do you want to continue? (Y/N): "))
-            
-    #         # If the user inputs Y, then the program will continue
-    #         if continue_or_not == "Y":
-    #             self.gpa_calculator()
-            
-    #         # If the user inputs N, then the program will stop
-    #         elif continue_or_not == "N":
-    #             print("Thank you for using our program!")
-    #             exit()
-            
-    #         # If the user inputs other characters, then the program will ask the user to input again
-    #         else:
-    #             print("Please input Y or N!")
-
-# Run the program
 manage = Manage()
-import os
-# This code is for Windows : os.system("cls")
-clear = lambda: os.system('clear')
 clear()
 manage.input_students()
 
