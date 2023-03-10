@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 
 # CLAIM: This code is written by myself, without copying from any other sources.
-# I started to write this code from Monday, 6 March 2023, 20:13:47 and the last modified is at the time I save this comment.
+# I started to write this code from Monday, 6 March 2023, 20:13:47
+# and the last modified is at the time I save this comment.
 # If you find any similarities with other sources, trust me, it's just a coincidence.
 # I struggled a lot at the for loop and the Y/N function, and I can't display the student
 # marks at the same time. But it's still working, for some reason...
@@ -30,9 +31,9 @@
 #              Phật phù hộ, không bao giờ BUG
 #            Nguyễn Quang Minh - ICT - BI12-271
 #        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
 import math
 import numpy as np
+
 
 class Student:
     def __init__(self, id, name, dob):
@@ -40,16 +41,19 @@ class Student:
         self.name = name
         self.dob = dob
 
+
 class Course:
     def __init__(self, id, name):
         self.id = id
         self.name = name
+
 
 class Mark:
     def __init__(self, student, course, mark):
         self.student = student
         self.course = course
         self.mark = mark
+
 
 class Manage:
 
