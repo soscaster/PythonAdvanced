@@ -147,6 +147,7 @@ class Manage:
             print("Course found!")
             print("Course name: ", self.courses[cou_id].name)
             print("----------------------------")
+            markc = []
             # stu_id = str(input("Please input the student ID you want to input mark: "))
 
             # Input marks for each student in the course
@@ -160,9 +161,11 @@ class Manage:
                     key = (stu_id, cou_id)
                     mark = math.floor(mark)
                     # Create a new mark object
-                    markre = Mark(stu_id, cou_id, mark)
+                    markc.append(Mark(self.students[stu_id], self.courses[cou_id], mark))
+
+                    # markre = Mark(self.students[stu_id], self.courses[cou_id], mark)
                     # Add the mark object to the dictionary
-                    self.marks[stu_id] = markre
+                    self.marks[key] = markc
 
                     # One more way to add the mark information to the dictionary
                     # self.marks[stu_id] = {"id": stu_id, "course": cou_id, "mark": mark}
@@ -196,7 +199,9 @@ class Manage:
             for stu_id in self.marks:
                 mark = self.marks[stu_id]
                 if mark.course == cou_id:
-                    print(f"Student ID: {mark.student}, Mark (rounded): {mark.mark}")
+            #       print(f"Student ID: {mark.student}, Mark (rounded): {mark.mark}")
+            # for mark in self.marks[cou_id]:
+                    print(f"Student ID: {mark.student.id}, Student name: {mark.student.name}, Mark: {mark.mark}")
             print("----------------------------")
             self.continue_or_not()
         else:

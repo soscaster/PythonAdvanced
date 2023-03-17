@@ -147,40 +147,39 @@ class Manage:
             print("Course found!")
             print("Course name: ", self.courses[cou_id].name)
             print("----------------------------")
-            # stu_id = str(input("Please input the student ID you want to input mark: "))
-
-            # Input marks for each student in the course
-
-            for stu_id in self.students:
-                # print("Student found!")
-                print("Student ID: ", self.students[stu_id].id)
+            stu_id = str(input("Please input the student ID you want to input mark: "))
+            
+            # Check if the student ID is in the dictionary
+            if stu_id in self.students:
+                print("Student found!")
                 print("Student name: ", self.students[stu_id].name)
+                print("----------------------------")
                 mark = float(input("Please input the mark: "))
                 if mark >= 0 and mark <= 20:
                     key = (stu_id, cou_id)
-                    mark = math.floor(mark)
                     # Create a new mark object
                     markre = Mark(stu_id, cou_id, mark)
                     # Add the mark object to the dictionary
-                    self.marks[stu_id] = markre
+                    self.marks[key] = markre
 
-                    # One more way to add the mark information to the dictionary
-                    # self.marks[stu_id] = {"id": stu_id, "course": cou_id, "mark": mark}
+                # One more way to add the mark information to the dictionary
+                # self.marks[stu_id] = {"id": stu_id, "course": cou_id, "mark": mark}
 
                     print("Mark information has been imported successfully!")
                     print("--------------------------------------------")
                 else:
+                    
                     print("Invalid mark!")
                     print("Please input the mark again!")
                     print("--------------------------------------------")
                     # Show the mark input menu again
                     self.input_marks()
-
             else:
                 print("Student not found!")
 
         else:
             print("Course not found!")
+
 
     def show_marks(self):
         clear()
