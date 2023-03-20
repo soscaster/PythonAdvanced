@@ -24,7 +24,9 @@ def display_marks(marks):
         print(f"Student: {student.name}, Course: {course.name}, Mark: {mark_value}")
     print("-----------------")
 
-    # Display GPA of all students in descending order
+
+
+# Display GPA of all students in descending order
 def display_gpa(marks):
     print("List of GPA in descending order: ")
 
