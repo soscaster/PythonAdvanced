@@ -1,10 +1,25 @@
 from domains.course import Course
 from domains.student import Student
+import time
+import os
+clear = lambda: os.system('clear')
 
-def input_student():
+def input_student(self):
     print("----- WELCOME -----")
-    # Input the number of students to import
+    # Input the number of students are going to be input
     stunum = int(input("Number of students you want to import: "))
+
+    # If stunum is less than 0, then the program will ask you to input again
+    if stunum < 0:
+        print("---------------------------")
+        print("Please input positive number only!")
+        print("---------------------------")
+        print("Please wait for 1 second...")
+        time.sleep(2)
+        # os.system("cls")
+        clear()
+        self.input_students()
+
     students = {}
     print("-----------------")
     i = 0
@@ -23,9 +38,21 @@ def input_student():
         print("--------------------------------------------")
     return students
 
-def input_courses():
+def input_courses(self):
     # Input the number of courses to import
     cou_num = int(input("Number of courses you want to import: "))
+        
+    # If cou_num is less than 0, then the program will ask you to input again
+    if cou_num < 0:
+        print("---------------------------")
+        print("Please input positive number only!")
+        print("---------------------------")
+        print("Please wait for 1 second...")
+        time.sleep(2)
+        # os.system("cls")
+        clear()
+        self.input_courses()
+
     courses = {}
     i = 0
     # Loop through and get input for each course
@@ -47,7 +74,7 @@ def input_marks(students, courses):
     marks = {}
     for cou_id in courses:
         # Ask for the marks of the students for each course
-        print(f"\nPlease input marks for course ID {cou_id}:")
+        print(f"Please input marks for course ID {cou_id}:")
         for stu_id in students:
             mark = float(input(f"Student {students[stu_id].id}'s mark: "))
             # Create a new mark object

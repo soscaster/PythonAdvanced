@@ -2,12 +2,11 @@ from domains.course import Course
 from domains.student import Student
 from domains.mark import Mark
 from input import input_student, input_courses, input_marks
-from output import display_students, display_courses, display_marks
+from output import display_students, display_courses, display_marks, display_gpa
 import os
 # Remember to change cls to clear if you're using Mac or Linux
-clear = lambda: os.system('cls')
+clear = lambda: os.system('clear')
 import time
-
 
 class Main:
 
@@ -19,29 +18,41 @@ class Main:
 
     def start(self):
         clear()
-        self.students = input_student()
+
+        # Input data for students
+        self.students = input_student(self)
         print("Please wait for 3 seconds...")
         time.sleep(3)
 
         clear()
-        self.courses = input_courses()
+        # Input data for courses
+        self.courses = input_courses(self)
         print("Please wait for 3 seconds...")
         time.sleep(3)
 
         clear()
+        # Display data for students and courses
         display_students(self.students)
         display_courses(self.courses)
-        
         # Press any key to continue
         input("Press any key to continue...")
 
         clear()
+        # Input data for marks
         self.marks = input_marks(self.students, self.courses)
         print("Please wait for 3 seconds...")
         time.sleep(3)
 
         clear()
+        # Display data for marks
         display_marks(self.marks)
+        input("Press any key to continue...")
+
+        clear()
+        # Display GPA of all students in descending order
+        display_gpa(self.marks)
+        input("Press any key to continue...")
+
 
 if __name__ == "__main__":
     manage = Main()
