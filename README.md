@@ -12,3 +12,8 @@ Student Info
 * Student Name: NGUYEN QUANG MINH
 * Student ID: BI12-271
 
+
+# ©️ 2023 - Nguyen Quang Minh. All rights reserved.
+This project is licensed under the
+###### GNU Lesser General Public License v3.0
+![LGPLv3 Logo](https://www.gnu.org/graphics/lgplv3-147x51.png)
