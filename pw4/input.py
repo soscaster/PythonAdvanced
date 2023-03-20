@@ -26,7 +26,7 @@ def input_student(self):
     # Loop through and get input for each student
     for i in range(stunum):
         i = i + 1
-        print(f"\nLet's input information for Student No. {i}")
+        print(f"Let's input information for Student No. {i}")
         stu_id = input("Student ID: ")
         stu_name = input("Student name: ")
         stu_dob = input("Student DOB: ")
@@ -54,11 +54,12 @@ def input_courses(self):
         self.input_courses()
 
     courses = {}
+    print("-----------------")
     i = 0
     # Loop through and get input for each course
     for i in range(cou_num):
         i = i + 1
-        print(f"\nLet's input information for Course No. {i}")
+        print(f"Let's input information for Course No. {i}")
         cou_id = input("Course ID: ")
         cou_name = input("Course name: ")
         cou_credit = int(input("Course credit(s): "))

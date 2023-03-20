@@ -21,7 +21,7 @@ def display_marks(marks):
         student = mark['student']
         course = mark['course']
         mark_value = mark['mark']
-        print(f"Student: {student.name}, Course: {course.name}, Mark: {mark_value}")
+        print(f"Student ID: {student.id}, Student Name: {student.name}, Course: {course.name}, Mark: {mark_value}")
     print("-----------------")
 
 
@@ -46,7 +46,8 @@ def display_gpa(marks):
             gpa[student.id] = {'marks': [mark_value], 'credits': [course.credit]}
     for stu_id in gpa:
         gpa[stu_id]['id'] = stu_id
-        gpa[stu_id]['gpa'] = math.floor(np.average(gpa[stu_id]['marks'], weights=gpa[stu_id]['credits']) * 100) / 100
+        # Round the GPA to 3 decimal places
+        gpa[stu_id]['gpa'] = math.floor(np.average(gpa[stu_id]['marks'], weights=gpa[stu_id]['credits']) * 1000) / 1000
 
     # Sort the GPA dictionary by GPA descending order
     gpa = dict(sorted(gpa.items(), key=lambda item: item[1]['gpa'], reverse=True))

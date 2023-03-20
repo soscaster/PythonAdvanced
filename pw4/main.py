@@ -1,3 +1,5 @@
+import sys
+sys.dont_write_bytecode = True
 from domains.course import Course
 from domains.student import Student
 from domains.mark import Mark
@@ -5,7 +7,7 @@ from input import input_student, input_courses, input_marks
 from output import display_students, display_courses, display_marks, display_gpa
 import os
 # Remember to change cls to clear if you're using Mac or Linux
-clear = lambda: os.system('clear')
+clear = lambda: os.system('cls')
 import time
 
 class Main:
@@ -24,7 +26,6 @@ class Main:
         print("Please wait for 3 seconds...")
         time.sleep(3)
     
-
     def input_course(self):
         clear()
         # Input data for courses
@@ -66,6 +67,7 @@ if __name__ == "__main__":
     # Menu
     while True:
         clear()
+        print("Student Management System")
         print("1. Input student(s) information")
         print("2. Input course(s) information")
         print("3. Display students and courses information")
@@ -75,18 +77,65 @@ if __name__ == "__main__":
         print("7. Exit")
         choice = input("Enter your choice: ")
         if choice == "1":
-            manage.input_student()
+            # If the user already input the student information, ask them if they want to override it
+            if len(manage.students) > 0:
+                print("-----------------")
+                print("You have already input the student information")
+                print("Do you want to override it?")
+                print("1. Yes")
+                print("2. No")
+                choice = input("Enter your choice: ")
+                if choice == "1":
+                    manage.input_student()
+                elif choice == "2":
+                    pass
+                else:
+                    print("Invalid choice")
+            else:
+                manage.input_student()   
         elif choice == "2":
-            manage.input_course()
+            # If the user already input the course information, ask them if they want to override it
+            if len(manage.courses) > 0:
+                print("-----------------")
+                print("You have already input the course information")
+                print("Do you want to override it?")
+                print("1. Yes")
+                print("2. No")
+                choice = input("Enter your choice: ")
+                if choice == "1":
+                    manage.input_course()
+                elif choice == "2":
+                    pass
+                else:
+                    print("Invalid choice")
+            else:
+                manage.input_course()
         elif choice == "3":
             manage.display_stu_cou()
         elif choice == "4":
-            manage.input_mark()
+            # If the user already input the mark information, ask them if they want to override it
+            if len(manage.marks) > 0:
+                print("-----------------")
+                print("You have already input the mark information")
+                print("Do you want to override it?")
+                print("1. Yes")
+                print("2. No")
+                choice = input("Enter your choice: ")
+                if choice == "1":
+                    manage.input_mark()
+                elif choice == "2":
+                    pass
+                else:
+                    print("Invalid choice")
+            else:
+                manage.input_mark()
         elif choice == "5":
             manage.display_mark()
         elif choice == "6":
             manage.stu_gpa()
         elif choice == "7":
+            clear()
+            print("Thank you for using my program!")
             break
         else:
             print("Invalid choice")
