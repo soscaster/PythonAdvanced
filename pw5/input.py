@@ -5,6 +5,16 @@ import time
 import os
 clear = lambda: os.system('clear')
 
+def load_courses():
+    courses = {}
+    with open("courses.txt", "r") as infile:
+        lines = infile.readlines()
+        for line in lines:
+            fields = line.strip().split(",")
+            course = Course(fields[0], fields[1], int(fields[2]))
+            courses[fields[0]] = course
+    return courses
+
 def load_students():
     students = {}
     with open("students.txt", "r") as infile:
@@ -15,25 +25,20 @@ def load_students():
             students[fields[0]] = student
     return students
 
-def load_courses():
-    courses = {}
-    with open("courses.txt", "r") as infile:
-        lines = infile.readlines()
-        for line in lines:
-            fields = line.strip().split(",")
-            course = Course(fields[0], fields[1], fields[2])
-            courses[fields[0]] = course
-    return courses
-
-def load_marks():
+def load_marks(students, courses):
     marks = {}
     with open("marks.txt", "r") as infile:
         lines = infile.readlines()
         for line in lines:
             fields = line.strip().split(",")
-            mark = Mark(fields[0], fields[1], fields[2])
-            key = fields[0] + "," + fields[1]
-            marks[key] = mark
+            # for fields[1] in courses:
+            #     for fields[0] in students:
+            mark_read = {
+                "student": students[fields[0]],
+                "course": courses[fields[1]],
+                "mark": float(fields[2])
+            }
+            marks[(fields[0], fields[1])] = mark_read
     return marks
 
 def input_student(self):

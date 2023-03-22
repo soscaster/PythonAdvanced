@@ -3,12 +3,12 @@ sys.dont_write_bytecode = True
 from domains.course import Course
 from domains.student import Student
 from domains.mark import Mark
-from input import input_student, input_courses, input_marks, load_courses, load_marks, load_students
+from input import input_student, input_courses, input_marks, load_students, load_courses, load_marks
 from output import display_students, display_courses, display_marks, display_gpa
 import zipfile
 import os
 # Remember to change cls to clear if you're using Mac or Linux
-clear = lambda: os.system('cls')
+clear = lambda: os.system('clear')
 import time
 
 class Main:
@@ -30,9 +30,9 @@ class Main:
                 with zipfile.ZipFile(infile, "r") as zipf:
                     zipf.extractall()
                     # Load data from extracted files
-                    self.students = load_students()
                     self.courses = load_courses()
-                    self.marks = load_marks()
+                    self.students = load_students()
+                    self.marks = load_marks(self.students, self.courses)
             print("Decompress files successfully!")
             print("-----------------")
             print("Please wait for 3 seconds...")
