@@ -7,16 +7,22 @@ import os
 clear = lambda: os.system('clear')
 
 def load_courses():
-    courses = pickle.load(open("courses.pkl", "rb"))
-    return courses
+    if os.path.exists("courses.pkl"):
+        courses = pickle.load(open("courses.pkl", "rb"))
+    else:
+        print("File 'courses.pkl' does not exist!")
 
 def load_students():
-    students = pickle.load(open("students.pkl", "rb"))
-    return students
+    if os.path.exists("students.pkl"):
+        students = pickle.load(open("students.pkl", "rb"))
+    else:
+        print("File 'students.pkl' does not exist!")
 
 def load_marks(students, courses):
-    marks = pickle.load(open("marks.pkl", "rb"))
-    return marks
+    if os.path.exists("marks.pkl"):
+        marks = pickle.load(open("marks.pkl", "rb"))
+    else:
+        print("File 'marks.pkl' does not exist!")
 
 def input_student(self):
     print("----- WELCOME -----")
