@@ -37,6 +37,12 @@ class Main:
             print("-----------------")
             print("Please wait for 3 seconds...")
             time.sleep(3)
+        else:
+            clear()
+            print("The database is not existed yet. Normal mode initializing...")
+            print("-----------------")
+            print("Please wait for 3 seconds...")
+            time.sleep(3)
 
     def input_student(self):
         clear()
@@ -81,29 +87,33 @@ class Main:
         input("Press any key to continue...")
 
     def compress_pkl_files(self):
+        if os.path.exists("students.pkl; courses.pkl; marks.pkl"):
+            # Compress all files txt into students.dat
+            print("Compressing pkl files to students_pkl.dat ...")
+            with open("students_pkl.dat", "wb") as outfile:
+                with zipfile.ZipFile(outfile, "w") as zipf:
+                    for file in os.listdir():
+                        if file.endswith(".pkl"):
+                            zipf.write(file)
+            print("Compress files successfully!")
+            print("-----------------")
 
-        # Compress all files txt into students.dat
-        print("Compressing pkl files to students_pkl.dat ...")
-        with open("students_pkl.dat", "wb") as outfile:
-            with zipfile.ZipFile(outfile, "w") as zipf:
-                for file in os.listdir():
-                    if file.endswith(".pkl"):
-                        zipf.write(file)
-        print("Compress files successfully!")
-        print("-----------------")
-
-        # Delete the previous students.pkl file
-        print("Deleting previous pickle files...")
-        if os.path.exists("students.pkl"):
-            os.remove("students.pkl")
-        # Delete the previous courses.pkl file
-        if os.path.exists("courses.pkl"):
-            os.remove("courses.pkl")
-        # Delete the previous marks.pkl file
-        if os.path.exists("marks.pkl"):
-            os.remove("marks.pkl")
-        print("Delete files successfully!")
-        print("-----------------")
+            # Delete the previous students.pkl file
+            print("Deleting previous pickle files...")
+            if os.path.exists("students.pkl"):
+                os.remove("students.pkl")
+            # Delete the previous courses.pkl file
+            if os.path.exists("courses.pkl"):
+                os.remove("courses.pkl")
+            # Delete the previous marks.pkl file
+            if os.path.exists("marks.pkl"):
+                os.remove("marks.pkl")
+            print("Delete files successfully!")
+            print("-----------------")
+        else:
+            print("The students database hasn't been initialized yet.")
+            print("Since then, nothing saved.")
+            print("-----------------")
 
 if __name__ == "__main__":
     manage = Main()
