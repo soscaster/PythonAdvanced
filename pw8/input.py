@@ -1,10 +1,21 @@
 from domains.course import Course
 from domains.student import Student
 from domains.mark import Mark
+import threading
 import pickle
 import time
 import os
 clear = lambda: os.system('clear')
+
+class SavePickleThread(threading.Thread):
+    def __init__(self, pickle_data, filename):
+        threading.Thread.__init__(self)
+        self.pickle_data = pickle_data
+        self.filename = filename
+
+    def run(self):
+        with open(self.filename, "wb") as p:
+            pickle.dump(self.pickle_data, p)
 
 def load_courses():
     if os.path.exists("courses.pkl"):
@@ -64,7 +75,7 @@ def input_student(self):
         print("--------------------------------------------")
 
         # Write the student information to the file
-        pickle.dump(students, open("students.pkl", "wb"))
+        SavePickleThread(students, "students.pkl").start()
     return students
 
 def input_courses(self):
@@ -100,7 +111,7 @@ def input_courses(self):
         print("--------------------------------------------")
 
         # Write the course information to the file
-        pickle.dump(courses, open("courses.pkl", "wb"))
+        SavePickleThread(courses, "courses.pkl").start()
     return courses
 
 def input_marks(students, courses):
@@ -121,5 +132,5 @@ def input_marks(students, courses):
         print("-----------------")
 
         # Write the mark information to the file
-        pickle.dump(marks, open("marks.pkl", "wb"))
+        SavePickleThread(marks, "marks.pkl").start()
     return marks
