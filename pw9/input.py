@@ -43,11 +43,21 @@ def load_marks(students, courses):
 
 def input_student(self):
     print("----- WELCOME -----")
-    # Input the number of students are going to be input
-    stunum = int(input("Number of students you want to import: "))
-
-    # If stunum is less than 0, then the program will ask you to input again
-    if stunum < 0:
+    try:
+        # Input the number of students are going to be input
+        stunum = int(input("Number of students you want to import: "))
+        if stunum < 0:
+            clear()
+            print("---------------------------")
+            print("Please input positive number only!")
+            print("---------------------------")
+            print("Please wait for 1 second...")
+            time.sleep(2)
+            # os.system("cls")
+            clear()
+            self.input_student()
+    except ValueError:
+        clear()
         print("---------------------------")
         print("Please input positive number only!")
         print("---------------------------")
@@ -55,8 +65,8 @@ def input_student(self):
         time.sleep(2)
         # os.system("cls")
         clear()
-        self.input_students()
-
+        self.input_student()
+    
     students = {}
     print("-----------------")
     i = 0
@@ -76,12 +86,27 @@ def input_student(self):
 
         # Write the student information to the file
         SavePickleThread(students, "students.pkl").start()
-    return students
+    if len(students) != 0:
+        print("Database of student has been imported!")
+        return students
+    else:
+        print("Check the code!")
+        return students
+    
 
 def input_courses(self):
-    # Input the number of courses to import
-    cou_num = int(input("Number of courses you want to import: "))
-        
+    try:
+        # Input the number of courses to import
+        cou_num = int(input("Number of courses you want to import: "))
+    except ValueError:
+        print("---------------------------")
+        print("Please input positive number only!")
+        print("---------------------------")
+        print("Please wait for 1 second...")
+        time.sleep(2)
+        # os.system("cls")
+        clear()
+        input_courses()
     # If cou_num is less than 0, then the program will ask you to input again
     if cou_num < 0:
         print("---------------------------")
@@ -91,7 +116,7 @@ def input_courses(self):
         time.sleep(2)
         # os.system("cls")
         clear()
-        self.input_courses()
+        input_courses()
 
     courses = {}
     print("-----------------")
@@ -112,7 +137,13 @@ def input_courses(self):
 
         # Write the course information to the file
         SavePickleThread(courses, "courses.pkl").start()
-    return courses
+
+    if len(courses) != 0:
+        print("Database of course has been imported!")
+        return courses
+    else:
+        print("Check the code!")
+        return courses
 
 def input_marks(students, courses):
     marks = {}
@@ -120,7 +151,27 @@ def input_marks(students, courses):
         # Ask for the marks of the students for each course
         print(f"Please input marks for course ID {cou_id}:")
         for stu_id in students:
-            mark = float(input(f"Student {students[stu_id].id}'s mark: "))
+            try:
+                mark = float(input(f"Student {students[stu_id].id}'s mark: "))
+            except ValueError:
+                print("---------------------------")
+                print("Please input number from 0 to 20 only!")
+                print("---------------------------")
+                print("Please wait for 1 second...")
+                time.sleep(2)
+                # os.system("cls")
+                clear()
+                input_marks(students, courses)
+
+            if mark < 0 or mark > 20:
+                print("---------------------------")
+                print("Please input number from 0 to 20 only!")
+                print("---------------------------")
+                print("Please wait for 1 second...")
+                time.sleep(2)
+                # os.system("cls")
+                clear()
+                input_marks(students, courses)
             # Create a new mark object
             new_mark = {
                 "student": students[stu_id],
@@ -133,4 +184,10 @@ def input_marks(students, courses):
 
         # Write the mark information to the file
         SavePickleThread(marks, "marks.pkl").start()
-    return marks
+
+    if len(marks) != 0:
+        print("Database of student has been imported!")
+        return marks
+    else:
+        print("Check the code!")
+        return marks

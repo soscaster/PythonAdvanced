@@ -32,7 +32,7 @@ class Main:
             # hide the main window
             self.root = tk.Tk()
             self.root.withdraw()
-            messagebox.showinfo("Notice", "The database is existed. Press OK to continue...")
+            messagebox.showinfo("Notice", "The database is existed.\nPress OK to continue...")
             # Decompress and load data from it
             print("Decompressing files...")
             print("-----------------")
@@ -45,17 +45,17 @@ class Main:
                     self.marks = load_marks(self.students, self.courses)
             print("Decompress files successfully!")
             print("-----------------")
-            print("Please wait for 3 seconds...")
+            print("Please wait for a seconds...")
             time.sleep(1)
         else:
             clear()
             # hide the main window
             self.root = tk.Tk()
             self.root.withdraw()
-            messagebox.showinfo("Notice", "The database is not existed yet. Press OK to continue...")
+            messagebox.showinfo("Notice", "The database is not existed yet.\nPress OK to continue...")
             print("The database is not existed yet. Normal mode initializing...")
             print("-----------------")
-            print("Please wait for 3 seconds...")
+            print("Please wait for a seconds...")
             time.sleep(1)
         
         self.create_GUI()
@@ -112,41 +112,72 @@ class Main:
     def input_student(self, event=None):
         clear()
         # Input data for students
-        self.students = input_student(self)
-        messagebox.showinfo("Result", "Input student data successfully! Press OK to continue...")
+        if len (self.students) > 0:
+            ask = messagebox.askyesno("Notice", "The student database is not empty.\nDo you want to overwrite it?")
+            if ask:
+                self.students = input_student(self)
+                messagebox.showinfo("Result", "Input student data successfully!\nPress OK to continue...")
+        else:
+            self.students = input_student(self)
+            messagebox.showinfo("Result", "Input student data successfully!\nPress OK to continue...")
     
     def input_course(self, event=None):
         clear()
         # Input data for courses
-        self.courses = input_courses(self)
-        messagebox.showinfo("Result", "Input course data successfully! Press OK to continue...")
+        if len (self.courses) > 0:
+            ask = messagebox.askyesno("Notice", "The course database is not empty.\nDo you want to overwrite it?")
+            if ask:
+                self.courses = input_courses(self)
+                messagebox.showinfo("Result", "Input course data successfully!\nPress OK to continue...")
+        else:
+            self.courses = input_courses(self)
+            messagebox.showinfo("Result", "Input course data successfully!\nPress OK to continue...")
 
     def display_stu_cou(self, event=None):
         clear()
-        # Display data for students and courses
-        display_students(self.students)
-        display_courses(self.courses)
-        messagebox.showinfo("Result", "The operation has been completed.")
+        if len (self.students) == 0 or len (self.courses) == 0:
+            messagebox.showerror("Error", "The student or course database is empty.\nPlease input data first!\n\nOr if you encountered any problem when input student or mark, we suggest you to input it again.")
+            return
+        else:
+            # Display data for students and courses
+            display_students(self.students)
+            display_courses(self.courses)
+            messagebox.showinfo("Result", "The operation has been completed.")
 
     def input_mark(self, event=None):
         clear()
         # Input data for marks
-        self.marks = input_marks(self.students, self.courses)
-        messagebox.showinfo("Result", "Input mark data successfully! Press OK to continue...")
+        if len (self.marks) > 0:
+            ask = messagebox.askyesno("Notice", "The mark database is not empty.\nDo you want to overwrite it?")
+            if ask:
+                self.marks = input_marks(self.students, self.courses)
+                messagebox.showinfo("Result", "Input mark data successfully!\nPress OK to continue...")
+        else:
+            self.marks = input_marks(self.students, self.courses)
+            messagebox.showinfo("Result", "Input mark data successfully!\nPress OK to continue...")
 
     def display_mark(self, event=None):
         clear()
-        # Display data for marks
-        display_marks(self.marks)
-        messagebox.showinfo("Result", "The operation has been completed.")
+        if len (self.marks) == 0:
+            messagebox.showerror("Error", "The mark database is empty!\nPlease input mark data first.")
+            return
+        else:
+            # Display data for marks
+            display_marks(self.marks)
+            messagebox.showinfo("Result", "The operation has been completed.")
 
     def stu_gpa(self, event=None):
         clear()
-        # Display GPA of all students in descending order
-        display_gpa(self.marks)
-        messagebox.showinfo("Result", "The operation has been completed.")
+        if len (self.marks) == 0:
+            messagebox.showerror("Error", "The mark database is empty!\nPlease input mark data first.")
+            return
+        else:
+            # Display GPA of all students in descending order
+            display_gpa(self.marks)
+            messagebox.showinfo("Result", "The operation has been completed.")
 
     def exit(self, event=None):
+        clear()
         # Compress all files txt into students.dat
         print("Compressing pkl files to students_pkl.dat ...")
         with open("students_pkl.dat", "wb") as outfile:
@@ -169,6 +200,9 @@ class Main:
             os.remove("marks.pkl")
         print("Delete files successfully!")
         print("-----------------")
+
+        # Say goodbye
+        messagebox.showinfo("Thank you!", "Compress file successfully!\nThank you for using the app!")
 
         # Exit
         exit()
